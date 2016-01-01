@@ -91,7 +91,7 @@ local function username_id(cb_extra, success, result)
       member_username = member
       member_id = v.id
       if member_id == our_id then return false end
-      if get_cmd == 'kick' then
+      if get_cmd == 'sik' then
         if is_momod2(member_id, chat_id) then
           return send_large_msg(receiver, "you can't kick mods/owner/admins")
         end
@@ -134,7 +134,7 @@ local function run(msg, matches)
     end
   end
   local receiver = get_receiver(msg)
-  if matches[1]:lower() == 'kickme' then-- /kickme
+  if matches[1]:lower() == 'sikme' then-- /kickme
     if msg.to.type == 'chat' then
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] left using kickme ")-- Save to logs
@@ -209,7 +209,7 @@ local function run(msg, matches)
     end
   end
 
-  if matches[1]:lower() == 'kick' then
+  if matches[1]:lower() == 'sik' then
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       if is_admin(msg) then
         local msgr = get_message(msg.reply_id,Kick_by_reply_admins, false)
@@ -235,7 +235,7 @@ local function run(msg, matches)
         kick_user(user_id, chat_id)
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'kick'
+        local get_cmd = 'sik'
         local name = user_print_name(msg.from)
         savelog(msg.to.id, name.." ["..msg.from.id.."] kicked user ".. matches[2])
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
@@ -294,22 +294,37 @@ end
 
 return {
   patterns = {
-    "^[!/]([Bb]anall) (.*)$",
-    "^[!/]([Bb]anall)$",
-    "^[!/]([Bb]anlist) (.*)$",
-    "^[!/]([Bb]anlist)$",
-    "^[!/]([Gg]banlist)$",
-    "^[!/]([Bb]an) (.*)$",
-    "^[!/]([Kk]ick)$",
-    "^[!/]([Uu]nban) (.*)$",
-    "^[!/]([Uu]nbanall) (.*)$",
-    "^[!/]([Uu]nbanall)$",
-    "^[!/]([Kk]ick) (.*)$",
-    "^[!/]([Kk]ickme)$",
-    "^[!/]([Bb]an)$",
-    "^[!/]([Uu]nban)$",
-    "^[!/]([Ii]d)$",
+    "^[!/#@]([Bb]anall) (.*)$",
+    "^[!/#@]([Bb]anall)$",
+    "^[!/#@]([Bb]anlist) (.*)$",
+    "^[!/#@]([Bb]anlist)$",
+    "^[!/#@]([Gg]banlist)$",
+    "^[!/#@]([Bb]an) (.*)$",
+    "^[!/#@]([Kk]ick)$",
+    "^[!/#@]([Uu]nban) (.*)$",
+    "^[!/#@]([Uu]nbanall) (.*)$",
+    "^[!/#@]([Uu]nbanall)$",
+    "^[!/#@]([Ss]ik) (.*)$",
+    "^[!/#@]([Ss]ikme)$",
+    "^[!/#@]([Bb]an)$",
+    "^[!/#@]([Uu]nban)$",
+    "^[!/#@]([Ii]d)$",
     "^!!tgservice (.+)$",
+    "^([Bb]anall) (.*)$",
+    "^([Bb]anall)$",
+    "^([Bb]anlist) (.*)$",
+    "^([Bb]anlist)$",
+    "^([Gg]banlist)$",
+    "^([Bb]an) (.*)$",
+    "^([Kk]ick)$",
+    "^([Uu]nban) (.*)$",
+    "^([Uu]nbanall) (.*)$",
+    "^([Uu]nbanall)$",
+    "^([Ss]ik) (.*)$",
+    "^([Ss]ikme)$",
+    "^([Bb]an)$",
+    "^([Uu]nban)$",
+    "^([Ii]d)$",
   },
   run = run,
   pre_process = pre_process
